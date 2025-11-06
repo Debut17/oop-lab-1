@@ -86,23 +86,44 @@ def filter(condition, dict_list):
     for item in dict_list:
         if condition(item):
             temps.append(item)
-        return temps
+    return temps
     
-# Print all cities in Germany
-filtered_list = filter(lambda x: x['country'] == 'Germany', cities)
-print(filtered_list)    
             
 # Let's write a function to do aggregation given an aggregation function and an aggregation key
 def aggregate(aggregation_key, aggregation_function, dict_list):
     values = []
     for item in dict_list:
-        if aggregation_key in item:
-            v = item[aggregation_key]
-            try:
-                v = float(v)
-            except:
-                pass
-            values.append(v)
-    if not values:
-        return None
+        try:
+            values.append(float(item[aggregation_key]))
+        except:
+            values.append(item[aggregation_key])
     return aggregation_function(values)
+
+
+# Print the average temperature of all the cities
+avg_temp = aggregate('temperature', lambda x: sum(x)/len(x), cities)
+print(f"The average temperature of all the cities: {avg_temp:.2f}")
+print()
+
+
+# Print all cities in Germany
+filtered_list = filter(lambda x: x['country'] == 'Germany', cities)
+cities_list = [[city['city'], city['country']] for city in filtered_list]
+print('All cities in Germany:')
+for city in filtered_list:
+    print([city['city'], city['country']])
+print()
+
+# Print all cities in Spain with a temperature above 12°C
+filtered_list = filter(lambda x: x['country'] == 'Spain' and float(x['temperature']) > 12, cities)
+print('All cities in Spain with a temperature above 12°C:')
+for city in filtered_list:
+    print([city['city'], city['temperature']])
+print()
+
+# Count the number of unique countries
+
+# Print the average temperature for all the cities in Germany
+
+# Print the max temperature for all the cities in Italy
+
