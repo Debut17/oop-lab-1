@@ -77,3 +77,32 @@ for city in cities:
         temps.append(float(city['temperature']))
 print(f'{max(temps):.2f}')
 print()
+
+
+# Let's write a function to filter out only items that meet the condition
+# Hint: condition will be associated with an anonymous function, e.x., lamdbda x: max(x)
+def filter(condition, dict_list):
+    temps = []
+    for item in dict_list:
+        if condition(item):
+            temps.append(item)
+        return temps
+    
+# Print all cities in Germany
+filtered_list = filter(lambda x: x['country'] == 'Germany', cities)
+print(filtered_list)    
+            
+# Let's write a function to do aggregation given an aggregation function and an aggregation key
+def aggregate(aggregation_key, aggregation_function, dict_list):
+    values = []
+    for item in dict_list:
+        if aggregation_key in item:
+            v = item[aggregation_key]
+            try:
+                v = float(v)
+            except:
+                pass
+            values.append(v)
+    if not values:
+        return None
+    return aggregation_function(values)
